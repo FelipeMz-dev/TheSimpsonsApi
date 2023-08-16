@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import com.example.animalapi.R
+import com.example.thesimpsonsapi.R
 import com.example.thesimpsonsapi.viewmodel.MainViewModel
 import com.example.thesimpsonsapi.data.model.Character
 import com.example.thesimpsonsapi.ui.theme.AnimalApiTheme
