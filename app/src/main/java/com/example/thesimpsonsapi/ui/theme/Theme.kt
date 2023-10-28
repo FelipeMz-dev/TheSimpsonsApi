@@ -2,6 +2,8 @@ package com.example.thesimpsonsapi.ui.theme
 
 import android.app.Activity
 import android.os.Build
+import android.view.Window
+import android.view.WindowInsets
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -15,22 +17,27 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 
 private val DarkColorScheme = darkColorScheme(
     primary = Primary,
-    Color.White,
-    secondary = Secondary,
+    onPrimary = Color.White,
+    secondary = Primary,
+    onSecondary = Primary,
     tertiary = Tertiary,
     onBackground = Primary
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Primary,
-    Color.Black,
+    onPrimary = Color.Black,
     secondary = Secondary,
+    onSecondary = Color.White,
     tertiary = Tertiary,
     onBackground = Color.Black,
     background = Primary
+
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -46,7 +53,6 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun AnimalApiTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
@@ -64,7 +70,10 @@ fun AnimalApiTheme(
         SideEffect {
             val window = (view.context as Activity).window
             window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = true
+            WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = true
+            WindowCompat.getInsetsController(window, view).systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            WindowCompat.getInsetsController(window, view).hide(WindowInsetsCompat.Type.navigationBars())
         }
     }
 

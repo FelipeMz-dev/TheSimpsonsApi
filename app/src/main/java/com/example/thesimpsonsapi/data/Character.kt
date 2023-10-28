@@ -1,4 +1,4 @@
-package com.example.thesimpsonsapi.data.model
+package com.example.thesimpsonsapi.data
 
 data class Character(
     val name:String,
