@@ -3,24 +3,23 @@ package com.example.thesimpsonsapi
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.thesimpsonsapi.data.DataRepository
-import com.example.thesimpsonsapi.data.remote.ApiClient
-import com.example.thesimpsonsapi.ui.viewmodel.MainViewModel
+import androidx.activity.viewModels
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.thesimpsonsapi.ui.navigation.AppNavigation
 import com.example.thesimpsonsapi.ui.theme.AnimalApiTheme
-import com.example.thesimpsonsapi.ui.view.Main
+import com.example.thesimpsonsapi.ui.viewmodel.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-private lateinit var viewModel: MainViewModel
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val repository = DataRepository(ApiClient())
-        viewModel = MainViewModel(repository)
         setContent {
             AnimalApiTheme {
-                Main(viewModel)
+                AppNavigation(viewModel)
             }
         }
     }

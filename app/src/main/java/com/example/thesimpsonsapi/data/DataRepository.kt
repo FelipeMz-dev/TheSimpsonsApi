@@ -1,11 +1,10 @@
 package com.example.thesimpsonsapi.data
 
-import androidx.lifecycle.LiveData
 import com.example.thesimpsonsapi.data.remote.ApiClient
-import com.example.thesimpsonsapi.data.remote.ApiService
+import javax.inject.Inject
 
-class DataRepository(private val apiClient: ApiClient) {
-    suspend fun getCharacters(limit: Int): List<Character> {
-        return apiClient.getCharacters(limit)
-    }
+class DataRepository @Inject constructor(
+    private val apiClient: ApiClient
+) {
+    suspend fun getCharacters(limit: Int): List<Character> = apiClient.getCharacters(limit)
 }
