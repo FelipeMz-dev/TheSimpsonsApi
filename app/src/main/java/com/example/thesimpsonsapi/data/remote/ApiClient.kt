@@ -11,5 +11,4 @@ class ApiClient @Inject constructor(private val apiService: ApiService) {
             .getCharacters(limit)
             .docs
             .map { it.toCharacter() }
-
 }

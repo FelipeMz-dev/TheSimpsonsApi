@@ -17,15 +17,28 @@ class MainViewModel @Inject constructor(
     private val getCharactersUsesCase: GetCharactersUsesCase
 ): ViewModel() {
 
-    val items: MutableStateFlow<List<Character>> = MutableStateFlow(listOf())
-    var isOpenImage: Boolean by mutableStateOf(false)
-    var urlImage: String by mutableStateOf("")
-    var isLoading: Boolean by mutableStateOf(true)
+    private val _uiState = MutableStateFlow(MainUiState())
+    val uiState: MutableStateFlow<MainUiState> = _uiState
+
+    //val items: MutableStateFlow<List<Character>> = MutableStateFlow(listOf())
+    ///var isOpenImage: Boolean by mutableStateOf(false)
+    ///var urlImage: String by mutableStateOf("")
+    //var isLoading: Boolean by mutableStateOf(true)
 
     fun getItems(){
         viewModelScope.launch {
-            items.value = getCharactersUsesCase.invoke(650)
-            isLoading = false
+            _uiState.value = MainUiState(isLoading = true)
+
+            getCharactersUsesCase.invoke(650).let {
+                _uiState.value = MainUiState(items = it)
+            }
         }
     }
+
+    data class MainUiState (
+        val isLoading: Boolean = false,
+        val items: List<Character> = emptyList(),
+        var urlImage: String = "",
+        var isOpenImage: Boolean = false
+    )
 }

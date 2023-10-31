@@ -9,6 +9,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,6 +23,7 @@ import com.example.thesimpsonsapi.ui.viewmodel.MainViewModel
 
 @Composable
 fun ElementImage(url: String, viewModel: MainViewModel) {
+    val state by viewModel.uiState.collectAsState()
     val painter = rememberImagePainter(
         data = url,
         builder = {
@@ -37,8 +40,8 @@ fun ElementImage(url: String, viewModel: MainViewModel) {
                 .background(MaterialTheme.colorScheme.secondary)
                 .size(72.dp)
                 .clickable {
-                    viewModel.isOpenImage = true
-                    viewModel.urlImage = url
+                    state.isOpenImage = true
+                    state.urlImage = url
                 }
         )
         if (painter.state is AsyncImagePainter.State.Loading) {

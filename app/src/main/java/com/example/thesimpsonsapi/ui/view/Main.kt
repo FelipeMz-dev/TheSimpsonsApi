@@ -24,31 +24,31 @@ import com.example.thesimpsonsapi.ui.viewmodel.MainViewModel
 
 @Composable
 fun Main(viewModel: MainViewModel) {
-    val list: List<Character> by viewModel.items.collectAsState()
+    val state by viewModel.uiState.collectAsState()
     val scrollState = rememberLazyListState()
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
             modifier = Modifier
                 .simpleVerticalScrollBar(scrollState)
                 .background(color = MaterialTheme.colorScheme.background)
-                .alpha(if (viewModel.isOpenImage) 0.5f else 1f)
+                .alpha(if (state.isOpenImage) 0.5f else 1f)
                 .padding(horizontal = 6.dp),
             state = scrollState
         ) {
-            items(list) { character ->
+            items(state.items) { character ->
                 ElementComponent(character, viewModel)
             }
         }
     }
 
-    if (viewModel.isOpenImage) {
+    if (state.isOpenImage) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .clickable { viewModel.isOpenImage = false },
+                .clickable { state.isOpenImage = false },
             contentAlignment = Alignment.Center
         ) {
-            ElementImageOpen(url = viewModel.urlImage)
+            ElementImageOpen(url = state.urlImage)
         }
     }
 
